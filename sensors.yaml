@@ -1,0 +1,260 @@
+#Open Hardware Monitor
+- platform: openhardwaremonitor
+  host: !secret ohm_host
+#Ookla speed test
+- platform: speedtest
+  server_id: !secret speedtest_server_id
+  minute: 30
+  hour:
+    - 0
+    - 6
+    - 11
+    - 18
+  monitored_conditions:
+    - upload
+    - ping
+#Fast.com
+- platform: fastdotcom
+  minute: 15
+  hour:
+    - 0
+    - 6
+    - 12
+    - 18
+#Mqtt
+- platform: mqtt
+  name: "Temperature"
+  state_topic: "sensor/temperature"
+  qos: 0
+  unit_of_measurement: "°C"
+- platform: mqtt
+  name: "Humidity"
+  state_topic: "sensor/humidity"
+  qos: 0
+  unit_of_measurement: "%"
+- platform: mqtt
+  name: "Pressure"
+  state_topic: "sensor/pressure"
+  qos: 0
+  unit_of_measurement: "hPa"
+- platform: mqtt
+  name: "Temperature External"
+  state_topic: "sensor/temperature1"
+  qos: 0
+  unit_of_measurement: "°C"
+- platform: mqtt
+  name: "Energy"
+  state_topic: "tele/sonoff-pow/SENSOR"
+  value_template: '{{ value_json["ENERGY"]["Today"] }}'
+  unit_of_measurement: "kWh"
+- platform: mqtt
+  name: "Power"
+  state_topic: "tele/sonoff-pow/SENSOR"
+  value_template: '{{ value_json["ENERGY"]["Power"] }}'
+  unit_of_measurement: "W"
+- platform: mqtt
+  name: "Voltage"
+  state_topic: "tele/sonoff-pow/SENSOR"
+  value_template: '{{ value_json["ENERGY"]["Voltage"] }}'
+  unit_of_measurement: "V"
+- platform: mqtt
+  name: "Current"
+  state_topic: "tele/sonoff-pow/SENSOR"
+  value_template: '{{ value_json["ENERGY"]["Current"] }}'
+  unit_of_measurement: "A"
+#Filtered sensor
+- platform: filter
+  name: "Filtered realistic external temperature"
+  entity_id: sensor.temperature_external
+  unit_of_measurement: "°C"
+  filters:
+    - filter: outlier
+      window_size: 4
+      radius: 4.0
+    - filter: lowpass
+      time_constant: 10
+      precision: 2
+- platform: filter
+  name: "Filtered realistic temperature"
+  entity_id: sensor.temperature
+  unit_of_measurement: "°C"
+  filters:
+    - filter: outlier
+      window_size: 4
+      radius: 4.0
+    - filter: lowpass
+      time_constant: 10
+      precision: 2
+- platform: filter
+  name: "Filtered realistic humidity"
+  entity_id: sensor.humidity
+  filters:
+    - filter: outlier
+      window_size: 4
+      radius: 4.0
+    - filter: lowpass
+      time_constant: 10
+      precision: 2
+- platform: filter
+  name: "Filtered realistic pressure"
+  entity_id: sensor.pressure
+  filters:
+    - filter: outlier
+      window_size: 4
+      radius: 4.0
+    - filter: lowpass
+      time_constant: 10
+      precision: 2
+#Statistics
+- platform: statistics
+  entity_id: sensor.temperature
+  name: Temperature stat
+  unit_of_measurement: "°C"
+- platform: statistics
+  entity_id: sensor.temperature_external
+  name: Temperature External stat
+  unit_of_measurement: "°C"
+- platform: statistics
+  entity_id: sensor.humidity
+  name: Humidity stat
+- platform: statistics
+  entity_id: sensor.pressure
+  name: Air Pressure mean
+#Plex
+#- platform: plex
+#  name: Plex Nas
+#  host: !secret plex_host
+#  port: !secret plex_port
+#  token: !secret plex_token
+#Uptime
+- platform: uptime
+  name: Uptime
+#Startup time
+- platform: template
+  sensors:
+    ha_startup_time:
+      entity_id: automation.startup_notification
+      value_template: >-
+        {{ as_timestamp((states.automation.startup_notification.attributes|default).last_triggered|default(None))|timestamp_local or 'unknown' }}
+#Version
+- platform: version
+  name: ha_version
+  scan_interval: 86400
+#Hass last Version
+- platform: rest
+  name: ha_github_version
+  resource: https://api.github.com/repos/home-assistant/home-assistant/releases/latest
+  username: !secret github_username
+  password: !secret github_password
+  authentication: basic
+  value_template: '{{ value_json.tag_name }}'
+  headers:
+      Accept: application/vnd.github.v3+json
+      Content-Type: application/json
+      User-Agent: Home Assistant REST sensor
+  scan_interval: 1800
+#Tasmota last Version
+- platform: rest
+  name: tasmota_github_version
+  resource: https://api.github.com/repos/arendst/Sonoff-Tasmota/releases/latest
+  username: !secret github_username
+  password: !secret github_password
+  authentication: basic
+  value_template: '{{ value_json.tag_name }}'
+  headers:
+      Accept: application/vnd.github.v3+json
+      Content-Type: application/json
+      User-Agent: Home Assistant REST sensor
+  scan_interval: 1800
+#Sonoff version
+- platform: rest
+  name: Sonoff 2 Tasmota Version
+  resource: http://192.168.1.71/cm?cmnd=status%202
+  value_template: '{{ value_json["StatusFWR"]["Version"] }}'
+- platform: rest
+  name: Sonoff 1 Tasmota Version
+  resource: http://192.168.1.72/cm?cmnd=status%202
+  value_template: '{{ value_json["StatusFWR"]["Version"] }}'
+- platform: rest
+  name: Sonoff Pow Tasmota Version
+  resource: http://192.168.1.73/cm?cmnd=status%202
+  value_template: '{{ value_json["StatusFWR"]["Version"] }}'
+- platform: rest
+  name: Sonoff 3 Tasmota Version
+  resource: http://192.168.1.74/cm?cmnd=status%202
+  value_template: '{{ value_json["StatusFWR"]["Version"] }}'
+- platform: rest
+  name: Sonoff 4 Tasmota Version
+  resource: http://192.168.1.75/cm?cmnd=status%202
+  value_template: '{{ value_json["StatusFWR"]["Version"] }}'
+#Sonoff template Version
+- platform: template
+  sensors:
+     tasmota_github_version_parsed:
+      value_template: "{{ states('sensor.tasmota_github_version')|replace('v','') }}"
+#Open weather map
+- platform: openweathermap
+  api_key: !secret openweathermap_api_key
+  monitored_conditions:
+    - weather
+    - rain
+#Dark sky
+- platform: darksky
+  api_key: !secret dark_sky_api_key
+  latitude: !secret latitude
+  longitude: !secret longitude
+  monitored_conditions:
+    - summary
+    - icon
+    - precip_probability
+    - nearest_storm_distance
+#Command line
+- platform: command_line
+  name: CPU Temperature
+  command: "cat /sys/class/thermal/thermal_zone0/temp"
+  unit_of_measurement: "°C"
+  scan_interval: 120
+  value_template: '{{ value | multiply(0.001) | round(2) }}'
+#Time
+- platform: time_date
+  display_options:
+    - time
+    - date
+#Cert expiry
+- platform: cert_expiry
+  host: avallehome.duckdns.org
+  name: HomeAssistant SSL Certificate
+  port: 8123
+#CPU speed
+- platform: cpuspeed
+#System Monitor
+- platform: systemmonitor
+  resources:
+    - type: disk_use_percent
+      arg: /
+    - type: disk_free
+      arg: /
+    - type: disk_use_percent
+      arg: /media
+    - type: disk_free
+      arg: /media
+    - type: memory_free
+    - type: processor_use
+    - type: ipv4_address
+      arg: eth0
+    - type: network_in
+      arg: eth0
+    - type: network_out
+      arg: eth0
+#Fail2Ban
+- platform: fail2ban
+  jails:
+    - hass-iptables
+  file_path: /home/homeassistant/.homeassistant/fail2ban.log
+  scan_interval: 60
+
+
+
+
+- platform: mqtt
+  state_topic: "stat/sonoff-third/POWER2"

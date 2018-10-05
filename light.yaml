@@ -1,0 +1,49 @@
+#Mqtt Json light
+- platform: mqtt_json
+  name: Led Strip
+  state_topic: "home/ESP_LED_RGB_1"
+  command_topic: "home/ESP_LED_RGB_1/set"
+  brightness: true
+  rgb: true
+  effect: true
+  effect_list: [colorfade_slow, colorfade_fast, flash]
+  optimistic: false
+  qos: 0
+#Rpi GPIO Pwm light
+- platform: rpi_gpio_pwm
+  leds:
+    - name: Lightstrip desktop
+      driver: gpio
+      pins: [27, 17, 22]
+      type: rgb
+#Yeelight
+- platform: yeelight
+  devices:
+    192.168.1.80:
+      name: Xiaomi Desk Lamp
+      transition: 500
+      use_music_mode: False
+      save_on_change: False
+#MQTT
+- platform: mqtt
+  name: "Bed light"
+  state_topic: "stat/sonof/POWER1"
+  command_topic: "cmnd/sonof/POWER"
+  availability_topic: "tele/sonof/LWT"
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+- platform: mqtt
+  name: "Spotlights"
+  state_topic: "stat/sonoff-second/POWER1"
+  command_topic: "cmnd/sonoff-second/POWER"
+  availability_topic: "tele/sonoff-second/LWT"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  optimistic: false
+  retain: false

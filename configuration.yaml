@@ -1,0 +1,333 @@
+homeassistant:
+  name: Home
+  latitude: !secret latitude
+  longitude: !secret longitude
+  elevation: !secret elevation
+  unit_system: metric
+  time_zone: Europe/Rome
+  customize: !include customize.yaml
+  whitelist_external_dirs:
+    - /home/homeassistant/.homeassistant/files/
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+sensor: !include sensors.yaml
+light: !include light.yaml
+switch: !include switch.yaml
+
+frontend:
+  themes: !include_dir_merge_named themes/
+
+config:
+
+http:
+  api_password: !secret http_api_password
+  ssl_certificate: /home/homeassistant/dehydrated/certs/avallehome.duckdns.org/fullchain.pem
+  ssl_key: /home/homeassistant/dehydrated/certs/avallehome.duckdns.org/privkey.pem
+  base_url: avallehome.duckdns.org
+  login_attempts_threshold: 6
+
+mqtt:
+  broker: !secret mqtt_broker_ip
+  port: !secret mqtt_broker_port
+  client_id: !secret mqtt_broker_client_id
+  username: !secret mqtt_broker_username
+  password: !secret mqtt_broker_password
+  keepalive: 60
+  protocol: 3.1
+  birth_message:
+    topic: "tele/hass1/LWT"
+    payload: "Online"
+    qos: 1
+    retain: false
+  will_message:
+    topic: "tele/hass1/LWT"
+    payload: "Offline"
+    qos: 1
+    retain: false
+
+zone:
+  - name: School
+    latitude: !secret school-latitude
+    longitude: !secret school-longitude
+    radius: 80
+    icon: mdi:school
+  - name: Home
+    latitude: !secret latitude
+    longitude: !secret longitude
+    radius: 40
+    icon: mdi:home-variant
+
+updater:
+
+conversation:
+
+logbook:
+
+shopping_list:
+
+map:
+
+weblink:
+  entities:
+    - name: Router
+      url: !secret url_router
+      icon: mdi:router-wireless
+    - name: Netdata
+      url: !secret url_netdata
+      icon: mdi:server-network
+
+ifttt:
+  key: !secret ifttt_key
+
+tts:
+  - platform: google
+    language: 'it'
+
+telegram_bot:
+  - platform: polling
+    api_key: !secret telegram_api_key
+    allowed_chat_ids:
+      - !secret telegram_allow_chat_ids_1
+      - !secret telegram_allow_chat_ids_2
+
+notify:
+  - name: Telegram_push
+    platform: telegram
+    chat_id: !secret telegram_allow_chat_ids_1
+  - name: Html5
+    platform: html5
+    gcm_api_key: !secret gcm-api-key
+    gcm_sender_id: !secret gcm-sender-id
+
+panel_iframe:
+  mdiindex:
+    title: MDI Icon Index
+    icon: mdi:vector-square
+    url: https://cdn.rawgit.com/james-fry/home-assistant-mdi/efd95d7a/home-assistant-mdi.html
+  thingspeak:
+    title: Thing Speak
+    icon: mdi:chart-donut
+    url: https://thingspeak.com/channels/591227/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15
+
+shell_command:
+  turn_off_liviopc: 'net rpc shutdown -I 192.168.1.106 -U livio%T0buRqFOaQNY'
+  turn_on_liviopc: 'wakeonlan D8:CB:8A:6F:E1:CF'
+  restart_liviopc: 'net rpc shutdown -r -I 192.168.1.106 -U livio%T0buRqFOaQNY'
+
+#duckdns:
+#  domain: !secret duckdns_domain
+#  access_token: !secret duckdns_access_token
+
+device_tracker:
+  - platform: nmap_tracker
+    hosts: 192.168.1.0/24
+    home_interval: 15
+    exclude:
+      - 192.168.1.110
+  - platform: google_maps
+    username: !secret 2nd_mail_username
+    password: !secret 2nd_mail_password
+    max_gps_accuracy: 1000
+    new_device_defaults:
+      track_new_devices: True
+      hide_if_away: False
+#  - platform: gpslogger
+#    password: !secret gpslogger_password
+
+weather:
+  - platform: openweathermap
+    api_key: !secret openweathermap_api_key
+
+thingspeak:
+  api_key: F38KBHIU5P4QNKDZ
+  id: 591227
+  whitelist: sensor.temperature_external
+
+input_boolean:
+  fake_heater1:
+    name: Fake Heater 1
+    icon: mdi:toggle-switch-off
+    initial: off
+
+climate:
+  - platform: generic_thermostat
+    name: Esterna
+    heater: input_boolean.fake_heater1
+    target_sensor: sensor.temperature_external
+    initial_operation_mode: "off"
+    target_temp: 20
+
+cast:
+  media_player:
+  - host: 192.168.1.101
+  - host: 192.168.1.245
+
+media_player:
+  - platform: spotify
+    client_id: !secret spotify_client_id
+    client_secret: !secret spotify_client_secret
+
+#Spotify Playlist Player
+input_number:
+  spotify_volume:
+    name: Volume
+    icon: mdi:volume-high
+    min: 0
+    max: 1
+    step: 0.05
+input_select:
+  spotify_playlist:
+    name: 'Playlist:'
+    options:
+      - Folkmetal
+      - Official Sziget 2018 Line Up playlist
+    icon: mdi:spotify
+  spotify_source:
+    name: 'Source:'
+    options:
+      - Livio PC
+      - P9000
+    initial: Livio PC
+    icon: mdi:speaker-wireless
+
+google_assistant:
+  project_id: !secret gassistant_project_id
+  client_id: !secret gassistant_client_id
+  access_token: !secret gassistant_access_token
+  agent_user_id: !secret gassistant_agent_user_id
+  api_key: !secret gassistant_api_key
+  exposed_domains:
+    - switch
+    - light
+    - media_player
+    - climate
+
+google:
+  client_id: !secret client-id
+  client_secret: !secret client-secret
+
+recorder:
+  purge_interval: 7
+  purge_keep_days: 2
+  exclude:
+    domains:
+      - weblink
+
+logger:
+  default: critical
+  logs:
+    # info
+    #homeassistant.bootstrap: info
+    #homeassistant.components.websocket_api: info
+    #homeassistant.core: error
+    #homeassistant.helpers.script: info
+    # warn
+    #homeassistant.components.alarm_control_panel: warn
+    #homeassistant.components.alert: warn
+    #homeassistant.components.api: warn
+    #homeassistant.components.automation: warn
+    #homeassistant.components.binary_sensor: warn
+    #homeassistant.components.camera: warn
+    #homeassistant.components.climate: warn
+    #homeassistant.components.cover: warn
+    #homeassistant.components.device_tracker: warn
+    homeassistant.components.http: warning
+    homeassistant.components.http.ban: warning
+    #homeassistant.components.light: warn
+    #homeassistant.components.lock: warn
+    #homeassistant.components.mqtt: warn
+    #homeassistant.components.notify: warn
+    #homeassistant.components.recorder: warn
+    #homeassistant.components.remote: warn
+    #homeassistant.components.sensor: warn
+    #homeassistant.components.switch: warn
+    #homeassistant.components.telegram_bot: warn
+    #homeassistant.helpers: warn
+    #homeassistant.loader: warn
+    #telegram: warn
+
+
+history_graph:
+  gr1:
+    name: Weather sensor graph
+    refresh: 5
+    entities:
+      - sensor.filtered_realistic_temperature
+      - sensor.filtered_realistic_external_temperature
+      - sensor.filtered_realistic_humidity
+      - sensor.filtered_realistic_pressure
+  gr2:
+    name: Network graph
+    refresh: 30
+    hours_to_show: 120
+    entities:
+      - sensor.fastcom_download
+      - sensor.speedtest_upload
+      - sensor.speedtest_ping
+
+alarm_control_panel:
+  - platform: manual
+
+cloud:
+
+history:
+  exclude:
+    domains:
+      - weblink
+      - automation
+      - updater
+      - switch
+      - light
+      - script
+      - media_player
+      - alarm_control_panel
+      - lock
+      - binary_sensor
+      - climate
+      - cover
+      - device_tracker
+      - input_boolean
+      - remote
+      - fan
+      - lock
+      - group
+      - calendar
+      - weather
+      - history_graph
+      - input_number
+      - input_select
+      - http
+      - config
+  include:
+    entities:
+      - sensor.cpu_speed
+      - sensor.cpu_temperature
+      - sensor.current
+      - sensor.disk_free_
+      - sensor.disk_free_media
+      - sensor.disk_use_percent_
+      - sensor.disk_use_percent_media
+      - sensor.energy
+      - sensor.fastcom_download
+      - sensor.humidity
+      - sensor.liviopc01_generic_memory_data_used_memory
+      - sensor.liviopc01_generic_memory_data_available_memory
+      - sensor.liviopc01_intel_core_i54690_load_cpu_total
+      - sensor.liviopc01_intel_core_i54690_temperatures_cpu_package
+      - sensor.liviopc01_nvidia_geforce_gtx_960_temperatures_gpu_core
+      - sensor.memory_free
+      - sensor.power
+      - sensor.pressure
+      - sensor.processor_use
+      - sensor.speedtest_ping
+      - sensor.speedtest_upload
+      - sensor.temperature
+      - sensor.temperature_external
+      - sensor.voltage
+
+
+binary_sensor:
+  - platform: workday
+    country: IT

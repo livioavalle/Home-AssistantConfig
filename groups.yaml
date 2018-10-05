@@ -1,0 +1,212 @@
+default_view:
+  view: yes
+  icon: mdi:home
+  entities:
+    - group.weather
+    - group.bedroom
+    - group.energy
+    - group.media
+    - group.external
+    - group.weblink
+    - group.alarm
+    - group.liviopc
+    - group.automations
+    - group.trackers
+    - sensor.mqtt_sensor
+bedroom_view:
+  name: Bedroom
+  view: yes
+  entities:
+    - group.bedroom
+    - gruop.energy
+    - group.liviopc
+    - group.zanzito
+    - group.rpi3
+    - group.system
+weather_view:
+  name: Weather
+  view: yes
+  entities:
+    - group.weather
+    - weather.dark_sky
+    - history_graph.weather_sensor_graph
+    - group.external
+mediaplayer_view:
+  name: Media Player
+  view: yes
+  entities:
+    - media_player.spotify
+    - group.music_spotify
+    - sensor.plex_nas
+    - media_player.plex_web_chrome
+    - media_player.camera_livio
+    - media_player.bagno
+system_view:
+  name: System
+  view: yes
+  entities:
+    - group.rpi3
+    - group.system
+    - group.liviopc
+    - group.network
+    - group.sonoff
+bedroom:
+  name: Bedroom
+  icon: mdi:hotel
+  entities:
+    - light.bed_light
+    - light.spotlights
+    - switch.sonoff_3
+    - switch.sonoff_4
+    - switch.sonoff_5
+    - switch.sonoff_pow
+    - light.led_strip
+    - light.lightstrip_desktop
+    - light.xiaomi_desk_lamp
+energy:
+  name: Energy
+  icon: mdi:power-settings
+  entities:
+    - sensor.current
+    - sensor.energy
+    - sensor.power
+    - sensor.voltage
+media:
+  name: Media Player
+  icon: mdi:youtube-tv
+  entities:
+   - media_player.spotify
+   - media_player.plex_web_chrome
+music_spotify:
+  name: Music
+  entities:
+  - input_select.spotify_playlist
+  - input_select.spotify_source
+  - script.spotify_music
+  - input_number.spotify_volume
+rpi3:
+  name: Raspberry Pi 3
+  entities:
+  - weblink.netdata
+  - sensor.cpu_speed
+  - sensor.cpu_temperature
+  - sensor.memory_free
+  - sensor.processor_use
+  - sensor.disk_free_
+  - sensor.disk_use_percent_
+  - sensor.ipv4_address_eth0
+  - sensor.network_in_eth0
+  - sensor.network_out_eth0
+  - sensor.disk_free_media
+  - sensor.disk_use_percent_media
+  - sensor.fail2ban_hassiptables
+system:
+    name: System
+    entities:
+      - sensor.date
+      - sensor.time
+      - binary_sensor.workday_sensor
+      - sensor.uptime
+      - sensor.ha_startup_time
+      - sensor.ha_version
+      - sensor.ha_github_version
+external:
+  name: External
+  icon: mdi:weather-sunny
+  entities:
+    - sensor.temperature
+    - sensor.temperature_external
+    - sensor.humidity
+    - sensor.pressure
+    - sensor.filtered_realistic_temperature
+    - sensor.temperature_stat_mean
+    - sensor.filtered_realistic_external_temperature
+    - sensor.temperature_external_stat_mean
+    - sensor.filtered_realistic_humidity
+    - sensor.humidity_stat_mean
+    - sensor.filtered_realistic_pressure
+    - sensor.air_pressure_mean_mean
+weather:
+  name: Weather
+  icon: mdi:weather-partlycloudy
+  entities:
+    - weather.openweathermap
+    - weather.dark_sky
+    - sensor.weather_alessandria_humidity
+    - sensor.weather_alessandria_temperature
+    - sensor.weather_alessandria_rain
+automations:
+  name: Automations
+  icon: mdi:home-automation
+  entities:
+    - automation.spotlights_button
+    - automation.all_bedroom_offon
+    - automation.test
+    - automation.2
+weblink:
+  name: Weblink
+  icon: mdi:web
+  entities:
+    - weblink.router
+    - weblink.plex
+    - weblink.configurator
+trackers:
+  name: Trackers
+  icon: mdi:access-point-network
+  entities:
+    - device_tracker.sonoff1lan
+    - device_tracker.sonoff2lan
+    - device_tracker.esp8266lan
+    - device_tracker.liviopc
+    - device_tracker.livio_elephone
+    - device_tracker.elephonep9000
+    - device_tracker.wiko
+    - device_tracker.huawei_p8_lite_2017lan
+    - device_tracker.ripeatlasprobe
+    - device_tracker.playstation4
+    - device_tracker.tg789vacxtreamlan
+    - device_tracker.dsldevicelan
+alarm:
+  name: Alarm Control Panel
+  icon: mdi:alarm-light
+  entities:
+    - alarm_control_panel.ha_alarm
+zanzito:
+  name: Zanzito
+  icon: mdi:cellphone
+  entities:
+    - sensor.zanzito_battery
+liviopc:
+  name: Livio Pc
+  icon: mdi:desktop-tower
+  entities:
+    - switch.wol_livio_pc
+    - switch.wol_nas
+    - sensor.breaches_liv2mar3gmailcom
+    - sensor.breaches_livioavalleoutlookcom
+    - sensor.breaches_livioavalleprotonmailcom
+    - sensor.breaches_liv2ma3yahoocom
+    - sensor.homeassistant_ssl_certificate
+    - sensor.uptime
+    - sensor.liviopc01_generic_memory_data_used_memory
+    - sensor.liviopc01_generic_memory_data_available_memory
+    - sensor.liviopc01_intel_core_i54690_load_cpu_total
+    - sensor.liviopc01_intel_core_i54690_temperatures_cpu_package
+    - sensor.liviopc01_nvidia_geforce_gtx_960_temperatures_gpu_core
+network:
+  name: Network
+  icon: mdi:ip-network
+  entities:
+    - sensor.fastcom_download
+    - sensor.speedtest_upload
+    - sensor.speedtest_ping
+    - history_graph.network_graph
+sonoff:
+  name: Sonoff
+  entities:
+    - sensor.tasmota_github_version_parsed
+    - sensor.sonoff_1_tasmota_version
+    - sensor.sonoff_2_tasmota_version
+    - sensor.sonoff_pow_tasmota_version
+    - sensor.sonoff_3_tasmota_version
+    - sensor.sonoff_4_tasmota_version

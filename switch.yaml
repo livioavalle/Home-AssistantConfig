@@ -1,0 +1,53 @@
+#Wake on lan
+- platform: wake_on_lan
+  mac_address: !secret wol_mac_address_liviopc
+  name: WOL Livio Pc
+  host: !secret wol_host_liviopc
+  broadcast_address: 255.255.255.254
+  turn_off:
+    service: shell_command.turn_off_liviopc
+- platform: wake_on_lan
+  mac_address: !secret wol_mac_address_nas
+  name: WOL NAS
+  host: !secret wol_host_nas
+#Mqtt
+- platform: mqtt
+  name: "Sonoff 3"
+  state_topic: "stat/sonoff-third/POWER1"
+  command_topic: "cmnd/sonoff-third/POWER1"
+  availability_topic: "tele/sonoff-third/LWT"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+- platform: mqtt
+  name: "Sonoff 4"
+  state_topic: "stat/sonoff-fourth/POWER"
+  command_topic: "cmnd/sonoff-fourth/POWER"
+  availability_topic: "tele/sonoff-fourth/LWT"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+- platform: mqtt
+  name: "Sonoff 5"
+  state_topic: "stat/sonoff-fifth/POWER"
+  command_topic: "cmnd/sonoff-fifth/POWER"
+  qos: 2
+  payload_on: "ON"
+  payload_off: "OFF"
+  optimistic: false
+  retain: true
+#  - platform: mqtt
+#    name: "Sonoff pow"
+#    state_topic: "stat/sonoff-pow/POWER"
+#    command_topic: "cmnd/sonoff-pow/POWER"
+#    qos: 2
+#    payload_on: "ON"
+#    payload_off: "OFF"
+#    optimistic: false
+#    retain: true
