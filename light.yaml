@@ -38,6 +38,7 @@
 - platform: mqtt
   name: "Spotlights"
   state_topic: "stat/sonoff-second/POWER1"
+  #state_topic: "stat/sonoff-second/POWER2"
   command_topic: "cmnd/sonoff-second/POWER"
   availability_topic: "tele/sonoff-second/LWT"
   qos: 1

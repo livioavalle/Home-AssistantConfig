@@ -12,7 +12,6 @@ default_view:
     - group.liviopc
     - group.automations
     - group.trackers
-    - sensor.mqtt_sensor
 bedroom_view:
   name: Bedroom
   view: yes
@@ -55,7 +54,8 @@ bedroom:
   icon: mdi:hotel
   entities:
     - light.bed_light
-    - light.spotlights
+    #- light.spotlights
+    - switch.spotligh
     - switch.sonoff_3
     - switch.sonoff_4
     - switch.sonoff_5

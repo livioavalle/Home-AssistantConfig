@@ -47,6 +47,7 @@ test_tts:
     entity_id: media_player.bedroom_2
     data:
       message: 'Ciao martino che puzza come va?'
+
 light_color:
   alias: light_color
   sequence:
@@ -68,3 +69,8 @@ light_color:
       transition: 5
       kelvin: 3000
       brightness: 50
+
+spotlights:
+  sequence:
+  -  service: mqtt.publish
+     data: {"topic":"cmnd/sonoff-second/POWER1","payload": "on"}

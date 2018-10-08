@@ -51,3 +51,15 @@
 #    payload_off: "OFF"
 #    optimistic: false
 #    retain: true
+- platform: template
+  switches:
+    spotligh:
+      value_template: "{{ is_state('sensor.spot_state', 'ON')}}"
+      turn_on:
+        service: script.spotlights
+        data:
+          entity_id: light.spotlight_open
+      turn_off:
+        service: script.spotlights
+        data:
+          entity_id: light.spotlights_close

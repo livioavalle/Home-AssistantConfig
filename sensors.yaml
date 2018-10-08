@@ -42,6 +42,12 @@
   state_topic: "sensor/temperature1"
   qos: 0
   unit_of_measurement: "°C"
+  value_template: >-
+      {%- if value|float >= -50 and value|float <= 100 -%}
+      {{ value | round(2) }}
+      {%- else -%}
+      nan
+      {%- endif -%}
 - platform: mqtt
   name: "Energy"
   state_topic: "tele/sonoff-pow/SENSOR"
@@ -252,9 +258,7 @@
     - hass-iptables
   file_path: /home/homeassistant/.homeassistant/fail2ban.log
   scan_interval: 60
-
-
-
-
+#spotlights state
 - platform: mqtt
-  state_topic: "stat/sonoff-third/POWER2"
+  state_topic: "stat/sonoff-second/POWER2"
+  name: spot_state
