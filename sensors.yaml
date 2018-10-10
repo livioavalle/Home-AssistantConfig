@@ -185,10 +185,10 @@
   name: Sonoff Pow Tasmota Version
   resource: http://192.168.1.73/cm?cmnd=status%202
   value_template: '{{ value_json["StatusFWR"]["Version"] }}'
-- platform: rest
-  name: Sonoff 3 Tasmota Version
-  resource: http://192.168.1.74/cm?cmnd=status%202
-  value_template: '{{ value_json["StatusFWR"]["Version"] }}'
+#- platform: rest
+#  name: Sonoff 3 Tasmota Version
+#  resource: http://192.168.1.74/cm?cmnd=status%202
+#  value_template: '{{ value_json["StatusFWR"]["Version"] }}'
 - platform: rest
   name: Sonoff 4 Tasmota Version
   resource: http://192.168.1.75/cm?cmnd=status%202
@@ -256,9 +256,19 @@
 - platform: fail2ban
   jails:
     - hass-iptables
-  file_path: /home/homeassistant/.homeassistant/fail2ban.log
   scan_interval: 60
 #spotlights state
 - platform: mqtt
   state_topic: "stat/sonoff-second/POWER2"
   name: spot_state
+#External IP
+- platform: rest
+  resource: http://ip.jsontest.com
+  name: External IP
+  value_template: '{{ value_json.ip }}'
+#Dimensione log e database
+- platform: filesize
+  name: file
+  file_paths:
+    - /data/home-assistant_v2.db
+    - /data/home-assistant.log

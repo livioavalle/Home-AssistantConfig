@@ -100,6 +100,8 @@ rpi3:
   - sensor.disk_free_media
   - sensor.disk_use_percent_media
   - sensor.fail2ban_hassiptables
+  - sensor.homeassistant_v2db
+  - sensor.homeassistantlog
 system:
     name: System
     entities:
@@ -200,6 +202,7 @@ network:
     - sensor.fastcom_download
     - sensor.speedtest_upload
     - sensor.speedtest_ping
+    - sensor.external_ip
     - history_graph.network_graph
 sonoff:
   name: Sonoff

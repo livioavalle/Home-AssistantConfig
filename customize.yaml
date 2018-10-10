@@ -141,3 +141,5 @@ sensor.sonoff_3_tasmota_version:
   icon: mdi:information-outline
 sensor.sonoff_4_tasmota_version:
   icon: mdi:information-outline
+sensor.external_ip:
+  icon: mdi:ip-network
