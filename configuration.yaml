@@ -65,6 +65,11 @@ updater:
 conversation:
 
 logbook:
+  include:
+    domains:
+      - light
+      - switch
+      - media_player
 
 shopping_list:
 
@@ -195,9 +200,9 @@ input_select:
 
 google_assistant:
   project_id: !secret gassistant_project_id
-  client_id: !secret gassistant_client_id
-  access_token: !secret gassistant_access_token
-  agent_user_id: !secret gassistant_agent_user_id
+  #client_id: !secret gassistant_client_id
+  #access_token: !secret gassistant_access_token
+  #agent_user_id: !secret gassistant_agent_user_id
   api_key: !secret gassistant_api_key
   exposed_domains:
     - switch
