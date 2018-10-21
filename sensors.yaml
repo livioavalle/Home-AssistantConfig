@@ -7,9 +7,13 @@
   minute: 30
   hour:
     - 0
+    - 3
     - 6
-    - 11
+    - 9
+    - 12
+    - 15
     - 18
+    - 21
   monitored_conditions:
     - upload
     - ping
@@ -17,10 +21,14 @@
 - platform: fastdotcom
   minute: 15
   hour:
-    - 0
-    - 6
-    - 12
-    - 18
+    - 1
+    - 4
+    - 7
+    - 10
+    - 13
+    - 16
+    - 19
+    - 22
 #Mqtt
 - platform: mqtt
   name: "Temperature"
@@ -226,6 +234,12 @@
   display_options:
     - time
     - date
+    - date_time
+    - time_date
+    - time_utc
+#Season
+- platform: season
+  type: astronomical
 #Cert expiry
 - platform: cert_expiry
   host: avallehome.duckdns.org
@@ -244,6 +258,14 @@
       arg: /media
     - type: disk_free
       arg: /media
+    - type: disk_use_percent
+      arg: /data
+    - type: disk_free
+      arg: /data
+    - type: disk_use_percent
+      arg: /var/log
+    - type: disk_free
+      arg: /var/log
     - type: memory_free
     - type: processor_use
     - type: ipv4_address
@@ -264,7 +286,11 @@
 #External IP
 - platform: rest
   resource: http://ip.jsontest.com
-  name: External IP
+  name: External IPv6
+  value_template: '{{ value_json.ip }}'
+- platform: rest
+  resource: https://api.ipify.org?format=json
+  name: External IPv4
   value_template: '{{ value_json.ip }}'
 #Dimensione log e database
 - platform: filesize
@@ -272,3 +298,9 @@
   file_paths:
     - /data/home-assistant_v2.db
     - /data/home-assistant.log
+#Weed days
+- platform: template
+  sensors:
+    day_of_week:
+      friendly_name: 'Giorno della settiman'
+      value_template: '{% if now().weekday() in (0,) %} Lun {% elif now().weekday() in (1,) %} Mar  {% elif now().weekday() in (2,) %} Mer  {% elif now().weekday() in (3,) %} Gio {% elif now().weekday() in (4,) %} Ven {% elif now().weekday() in (5,) %} Sab {% elif now().weekday() in (6,) %} Dom{% endif %}'

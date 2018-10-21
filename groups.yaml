@@ -1,3 +1,6 @@
+################################
+############# View #############
+################################
 default_view:
   view: yes
   icon: mdi:home
@@ -12,6 +15,7 @@ default_view:
     - group.liviopc
     - group.automations
     - group.trackers
+    - group.alarm_clock
 bedroom_view:
   name: Bedroom
   view: yes
@@ -49,6 +53,10 @@ system_view:
     - group.liviopc
     - group.network
     - group.sonoff
+    - group.homeassistant
+################################
+############ Group #############
+################################
 bedroom:
   name: Bedroom
   icon: mdi:hotel
@@ -94,24 +102,20 @@ rpi3:
   - sensor.processor_use
   - sensor.disk_free_
   - sensor.disk_use_percent_
-  - sensor.ipv4_address_eth0
-  - sensor.network_in_eth0
-  - sensor.network_out_eth0
   - sensor.disk_free_media
   - sensor.disk_use_percent_media
-  - sensor.fail2ban_hassiptables
-  - sensor.homeassistant_v2db
-  - sensor.homeassistantlog
+  - sensor.disk_free_data
+  - sensor.disk_use_percent_data
+  - sensor.disk_free_varlog
+  - sensor.disk_use_percent_varlog
 system:
     name: System
     entities:
       - sensor.date
       - sensor.time
+      - sensor.season
+      - sensor.day_of_week
       - binary_sensor.workday_sensor
-      - sensor.uptime
-      - sensor.ha_startup_time
-      - sensor.ha_version
-      - sensor.ha_github_version
 external:
   name: External
   icon: mdi:weather-sunny
@@ -188,13 +192,22 @@ liviopc:
     - sensor.breaches_livioavalleoutlookcom
     - sensor.breaches_livioavalleprotonmailcom
     - sensor.breaches_liv2ma3yahoocom
-    - sensor.homeassistant_ssl_certificate
-    - sensor.uptime
     - sensor.liviopc01_generic_memory_data_used_memory
     - sensor.liviopc01_generic_memory_data_available_memory
     - sensor.liviopc01_intel_core_i54690_load_cpu_total
     - sensor.liviopc01_intel_core_i54690_temperatures_cpu_package
     - sensor.liviopc01_nvidia_geforce_gtx_960_temperatures_gpu_core
+homeassistant:
+  name: Home Assistant
+  icon: mdi:home-assistant
+  entities:
+    - sensor.homeassistant_ssl_certificate
+    - sensor.uptime
+    - sensor.ha_startup_time
+    - sensor.ha_version
+    - sensor.ha_github_version
+    - sensor.homeassistant_v2db
+    - sensor.homeassistantlog
 network:
   name: Network
   icon: mdi:ip-network
@@ -202,7 +215,12 @@ network:
     - sensor.fastcom_download
     - sensor.speedtest_upload
     - sensor.speedtest_ping
-    - sensor.external_ip
+    - sensor.external_ipv4
+    - sensor.external_ipv6
+    - sensor.ipv4_address_eth0
+    - sensor.network_in_eth0
+    - sensor.network_out_eth0
+    - sensor.fail2ban_hassiptables
     - history_graph.network_graph
 sonoff:
   name: Sonoff
@@ -213,3 +231,8 @@ sonoff:
     - sensor.sonoff_pow_tasmota_version
     - sensor.sonoff_3_tasmota_version
     - sensor.sonoff_4_tasmota_version
+alarm_clock:
+  name: Morning Alarm & Wakeup
+  entities:
+    - input_boolean.alarm_clock
+    - input_select.wake_up_time

@@ -44,7 +44,7 @@ test_tts:
   alias: test_tts
   sequence:
   - service: tts.google_say
-    entity_id: media_player.bedroom_2
+    entity_id: media_player.camera_livio
     data:
       message: 'Ciao martino che puzza come va?'
 

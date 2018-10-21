@@ -112,7 +112,7 @@ sensor.ha_github_version:
   friendly_name: "HA GitHub Version"
   icon: mdi:github-box
 sensor.ha_startup_time:
-  friendly_name: "Startup Time"
+  friendly_name: "HA Startup Time"
   icon: mdi:clock-start
 sensor.ha_uptime:
   friendly_name: "Upime"
@@ -141,5 +141,14 @@ sensor.sonoff_3_tasmota_version:
   icon: mdi:information-outline
 sensor.sonoff_4_tasmota_version:
   icon: mdi:information-outline
-sensor.external_ip:
+sensor.external_ipv6:
   icon: mdi:ip-network
+sensor.external_ipv4:
+  icon: mdi:ip-network
+sensor.ipv4_address_eth0:
+  friendly_name: Internal IPv4
+  icon: mdi:ip-network
+sensor.season:
+  icon: mdi:weather-sunny
+sensor.day_of_week:
+  icon: mdi:calendar

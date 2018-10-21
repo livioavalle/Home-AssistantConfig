@@ -3,9 +3,9 @@
   mac_address: !secret wol_mac_address_liviopc
   name: WOL Livio Pc
   host: !secret wol_host_liviopc
-  broadcast_address: 255.255.255.254
+  broadcast_address: 255.255.255.255
   turn_off:
-    service: shell_command.turn_off_liviopc
+    service: shell_command.hibernate_liviopc
 - platform: wake_on_lan
   mac_address: !secret wol_mac_address_nas
   name: WOL NAS
