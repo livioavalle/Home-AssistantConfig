@@ -16,7 +16,7 @@
   state_topic: "stat/sonoff-third/POWER1"
   command_topic: "cmnd/sonoff-third/POWER1"
   availability_topic: "tele/sonoff-third/LWT"
-  qos: 1
+  qos: 0
   payload_on: "ON"
   payload_off: "OFF"
   payload_available: "Online"
@@ -27,7 +27,7 @@
   state_topic: "stat/sonoff-fourth/POWER"
   command_topic: "cmnd/sonoff-fourth/POWER"
   availability_topic: "tele/sonoff-fourth/LWT"
-  qos: 1
+  qos: 0
   payload_on: "ON"
   payload_off: "OFF"
   payload_available: "Online"
@@ -37,7 +37,7 @@
   name: "Sonoff 5"
   state_topic: "stat/sonoff-fifth/POWER"
   command_topic: "cmnd/sonoff-fifth/POWER"
-  qos: 2
+  qos: 0
   payload_on: "ON"
   payload_off: "OFF"
   optimistic: false

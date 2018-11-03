@@ -94,6 +94,7 @@
     - platform: homeassistant
       event: start
   action:
+    - service: google_assistant.request_sync
     - service: automation.turn_off
       data:
         entity_id: automation.startup_notification

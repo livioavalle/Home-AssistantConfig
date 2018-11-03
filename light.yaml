@@ -41,7 +41,7 @@
   #state_topic: "stat/sonoff-second/POWER2"
   command_topic: "cmnd/sonoff-second/POWER"
   availability_topic: "tele/sonoff-second/LWT"
-  qos: 1
+  qos: 0
   payload_on: "ON"
   payload_off: "OFF"
   payload_available: "Online"
