@@ -152,3 +152,25 @@ sensor.season:
   icon: mdi:weather-sunny
 sensor.day_of_week:
   icon: mdi:calendar
+script.reebot_pi:
+  icon: mdi:power
+automation.luci_accese_timer_acceso:
+  hidden: true
+automation.luci_spente_fine_timer:
+  hidden: true
+automation.luci_spente_timer_cancellato:
+  hidden: true
+sensor.hline_1:
+  custom_ui_state_card: state-card-hline
+  config:
+    width: 89
+    height: 0
+    backgroundcolor: white
+    bordertop: '1px solid black'
+sensor.hline_2:
+  custom_ui_state_card: state-card-hline
+  config:
+    width: 89
+    height: 0
+    backgroundcolor: white
+    bordertop: '1px solid black'

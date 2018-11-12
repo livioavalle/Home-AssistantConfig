@@ -26,6 +26,7 @@ bedroom_view:
     - group.zanzito
     - group.rpi3
     - group.system
+    - group.timer_luci
 weather_view:
   name: Weather
   view: yes
@@ -44,6 +45,7 @@ mediaplayer_view:
     - media_player.plex_web_chrome
     - media_player.camera_livio
     - media_player.bagno
+    - media_player.sala
 system_view:
   name: System
   view: yes
@@ -68,8 +70,10 @@ bedroom:
     - switch.sonoff_4
     - switch.sonoff_5
     - switch.sonoff_pow
+    - sensor.hline_1
     - light.led_strip
     - light.lightstrip_desktop
+    - sensor.hline_2
     - light.xiaomi_desk_lamp
 energy:
   name: Energy
@@ -108,6 +112,7 @@ rpi3:
   - sensor.disk_use_percent_data
   - sensor.disk_free_varlog
   - sensor.disk_use_percent_varlog
+  - script.reebot_pi
 system:
     name: System
     entities:
@@ -236,3 +241,10 @@ alarm_clock:
   entities:
     - input_boolean.alarm_clock
     - input_select.wake_up_time
+timer_luci:
+    name: Timer Luci
+    view: no
+    entities:
+     - input_number.minuti_luci
+     - input_select.luci_timer
+     - timer.light_on

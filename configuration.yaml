@@ -9,6 +9,18 @@ homeassistant:
   whitelist_external_dirs:
     - /home/homeassistant/.homeassistant/files/
     - /data
+  customize_glob:
+    light.*:
+      custom_ui_state_card: state-card-custom-ui
+      show_last_changed: true
+      state_card_mode: single-line
+      stretch_slider: true
+    switch.*:
+      custom_ui_state_card: state-card-custom-ui
+      show_last_changed: true
+    sensor.*:
+      custom_ui_state_card: state-card-custom-ui
+      show_last_changed: true
 
 group: !include groups.yaml
 automation: !include automations.yaml
@@ -19,6 +31,13 @@ switch: !include switch.yaml
 
 frontend:
   themes: !include_dir_merge_named themes/
+  extra_html_url:
+    - /local/custom_ui/state-card-hline.html
+  extra_html_url_es5:
+    - /local/custom_ui/state-card-hline_es5.html
+
+customizer:
+  custom_ui: hosted
 
 config:
 
@@ -122,6 +141,7 @@ shell_command:
   hibernate_liviopc: "sshpass -p 'T0buRqFOaQNY' ssh livio@192.168.1.106 'shutdown -h'"
   restart_liviopc: "sshpass -p 'T0buRqFOaQNY' ssh livio@192.168.1.106 'shutdown -r'"
   turn_on_liviopc: 'wakeonlan D8:CB:8A:6F:E1:CF'
+  reboot_pi_cmd: '/usr/bin/sudo /sbin/shutdown -r now'
   #turn_off_liviopc: 'net rpc shutdown -I 192.168.1.106 -U livio%T0buRqFOaQNY'
   #restart_liviopc: 'net rpc shutdown -r -I 192.168.1.106 -U livio%T0buRqFOaQNY'
 
@@ -175,34 +195,58 @@ cast:
   media_player:
   - host: 192.168.1.101
   - host: 192.168.1.245
+  - host: 192.168.1.115
 
 media_player:
   - platform: spotify
     client_id: !secret spotify_client_id
     client_secret: !secret spotify_client_secret
 
-#Spotify Playlist Player
 input_number:
-  spotify_volume:
+  spotify_volume: #Spotify Playlist Player
     name: Volume
     icon: mdi:volume-high
     min: 0
     max: 1
     step: 0.05
+  minuti_luci: #Timer luci
+    name: Minuti Timer Luci
+    initial: 1
+    min: 0
+    max: 60
+    step: 1
+    icon: mdi:timer
+
 input_select:
-  spotify_playlist:
+  spotify_playlist: #Spotify Playlist Player
     name: 'Playlist:'
     options:
       - Folkmetal
       - Official Sziget 2018 Line Up playlist
     icon: mdi:spotify
-  spotify_source:
+  spotify_source: #Spotify Playlist Player
     name: 'Source:'
     options:
       - Livio PC
       - P9000
     initial: Livio PC
     icon: mdi:speaker-wireless
+  luci_timer: #Timer luci
+    name: Luci Timer
+    options:
+     - Seleziona Luci
+     - bed_light
+     - led_strip
+     - lightstrip_desktop
+     - xiaomi_desk_lamp
+     #- spotligh
+     #- sonoff_4
+    initial: Seleziona Luci
+    icon: mdi:selection
+
+timer:
+  light_on:
+    name: Timer Luci
 
 google_assistant:
   project_id: !secret gassistant_project_id

@@ -198,3 +198,54 @@
             {% else %}
               {{ message }}
             {% endif %}
+################ Timer Luci ################
+- alias: Luci accese timer acceso
+  trigger:
+    platform: state
+    entity_id:
+      - light.bed_light
+      - light.led_strip
+      - light.lightstrip_desktop
+      - light.xiaomi_desk_lamp
+      #- switch.spotligh
+      #- switch.sonoff_4
+    to: 'on'
+  condition:
+    - condition: template
+      value_template: >
+        {{ trigger.entity_id == 'light.' + states('input_select.luci_timer')|lower }}
+  action:
+    service: timer.start
+    entity_id: timer.light_on
+    data_template:
+      duration: "{{ (states('input_number.minuti_luci')|int(2) * 60)|timestamp_custom('%H:%M:%S',false) }}"
+
+- alias: Luci spente timer cancellato
+  trigger:
+    platform: state
+    entity_id:
+      - light.bed_light
+      - light.led_strip
+      - light.lightstrip_desktop
+      - light.xiaomi_desk_lamp
+      #- switch.spotligh
+      #- switch.sonoff_4
+    to: 'off'
+  condition:
+    - condition: template
+      value_template: >
+        {{ trigger.entity_id == 'light.' + states('input_select.luci_timer')|lower }}
+  action:
+    service: timer.cancel
+    entity_id: timer.light_on
+
+- alias: Luci spente fine timer
+  trigger:
+    platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.light_on
+  action:
+    service: light.turn_off
+    data_template:
+      entity_id: "light.{{ states('input_select.luci_timer')|lower }}"

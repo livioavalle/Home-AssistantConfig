@@ -69,8 +69,13 @@ light_color:
       transition: 5
       kelvin: 3000
       brightness: 50
-
+## Turn spotlights
 spotlights:
   sequence:
   -  service: mqtt.publish
      data: {"topic":"cmnd/sonoff-second/POWER1","payload": "on"}
+## Reboot RPi
+reebot_pi:
+    alias: Reboot Raspberry
+    sequence:
+    - service: shell_command.reboot_pi_cmd
