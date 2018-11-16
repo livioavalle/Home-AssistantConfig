@@ -203,12 +203,15 @@ media_player:
     client_secret: !secret spotify_client_secret
 
 input_number:
+  #Spotify Playlist player
   spotify_volume: #Spotify Playlist Player
     name: Volume
     icon: mdi:volume-high
     min: 0
     max: 1
     step: 0.05
+
+  #Timer Luci
   minuti_luci: #Timer luci
     name: Minuti Timer Luci
     initial: 1
@@ -218,6 +221,7 @@ input_number:
     icon: mdi:timer
 
 input_select:
+  #Spotify Playlist player
   spotify_playlist: #Spotify Playlist Player
     name: 'Playlist:'
     options:
@@ -231,6 +235,8 @@ input_select:
       - P9000
     initial: Livio PC
     icon: mdi:speaker-wireless
+
+  #Timer Luci
   luci_timer: #Timer luci
     name: Luci Timer
     options:

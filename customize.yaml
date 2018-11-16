@@ -154,12 +154,15 @@ sensor.day_of_week:
   icon: mdi:calendar
 script.reebot_pi:
   icon: mdi:power
+script.restart_hass:
+  icon: mdi:power
 automation.luci_accese_timer_acceso:
   hidden: true
 automation.luci_spente_fine_timer:
   hidden: true
 automation.luci_spente_timer_cancellato:
   hidden: true
+#Hline
 sensor.hline_1:
   custom_ui_state_card: state-card-hline
   config:
@@ -174,3 +177,40 @@ sensor.hline_2:
     height: 0
     backgroundcolor: white
     bordertop: '1px solid black'
+sensor.hline_3:
+  custom_ui_state_card: state-card-hline
+  config:
+    width: 89
+    height: 0
+    backgroundcolor: white
+    bordertop: '1px solid black'
+sensor.hline_4:
+  custom_ui_state_card: state-card-hline
+  config:
+    width: 89
+    height: 0
+    backgroundcolor: white
+    bordertop: '1px solid black'
+sensor.hline_5:
+  custom_ui_state_card: state-card-hline
+  config:
+    width: 89
+    height: 0
+    backgroundcolor: white
+    bordertop: '1px solid black'
+sensor.hline_6:
+  custom_ui_state_card: state-card-hline
+  config:
+    width: 89
+    height: 0
+    backgroundcolor: white
+    bordertop: '1px solid black'
+script.radio:
+  friendly_name: Avvia Riproduzione
+  icon: mdi:play
+script.pause_playback:
+  friendly_name: Pausa
+  icon: mdi:pause
+script.stop_playback:
+  friendly_name: Stop
+  icon: mdi:stop

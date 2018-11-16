@@ -112,6 +112,7 @@ rpi3:
   - sensor.disk_use_percent_data
   - sensor.disk_free_varlog
   - sensor.disk_use_percent_varlog
+  - sensor.hline_1
   - script.reebot_pi
 system:
     name: System
@@ -129,14 +130,6 @@ external:
     - sensor.temperature_external
     - sensor.humidity
     - sensor.pressure
-    - sensor.filtered_realistic_temperature
-    - sensor.temperature_stat_mean
-    - sensor.filtered_realistic_external_temperature
-    - sensor.temperature_external_stat_mean
-    - sensor.filtered_realistic_humidity
-    - sensor.humidity_stat_mean
-    - sensor.filtered_realistic_pressure
-    - sensor.air_pressure_mean_mean
 weather:
   name: Weather
   icon: mdi:weather-partlycloudy
@@ -213,6 +206,8 @@ homeassistant:
     - sensor.ha_github_version
     - sensor.homeassistant_v2db
     - sensor.homeassistantlog
+    - sensor.hline_1
+    - script.restart_hass
 network:
   name: Network
   icon: mdi:ip-network
@@ -248,3 +243,20 @@ timer_luci:
      - input_number.minuti_luci
      - input_select.luci_timer
      - timer.light_on
+radio:
+    name: Radio
+    control: hidden
+    icon: mdi:radio
+    entities:
+      - input_select.radio_station
+      - input_select.chromecast_radio
+      - script.radio
+      - script.stop_playback
+      - script.pause_playback
+      - input_number.google_mini_red
+      - input_number.google_mini_black
+      - input_number.master_vol
+      - sensor.hline_dashed
+      - input_text.voce_testo_da_riprodurre
+      #- script.voce_riproduci_testo
+      - automation.voce_riproduzione_automatica_del_testo

@@ -79,3 +79,8 @@ reebot_pi:
     alias: Reboot Raspberry
     sequence:
     - service: shell_command.reboot_pi_cmd
+## Restart Hass
+restart_hass:
+    alias: Restart Home-Assistant
+    sequence:
+    - service: homeassistant.restart

@@ -76,64 +76,6 @@
   state_topic: "tele/sonoff-pow/SENSOR"
   value_template: '{{ value_json["ENERGY"]["Current"] }}'
   unit_of_measurement: "A"
-#Filtered sensor
-- platform: filter
-  name: "Filtered realistic external temperature"
-  entity_id: sensor.temperature_external
-  unit_of_measurement: "°C"
-  filters:
-    - filter: outlier
-      window_size: 4
-      radius: 4.0
-    - filter: lowpass
-      time_constant: 10
-      precision: 2
-- platform: filter
-  name: "Filtered realistic temperature"
-  entity_id: sensor.temperature
-  unit_of_measurement: "°C"
-  filters:
-    - filter: outlier
-      window_size: 4
-      radius: 4.0
-    - filter: lowpass
-      time_constant: 10
-      precision: 2
-- platform: filter
-  name: "Filtered realistic humidity"
-  entity_id: sensor.humidity
-  filters:
-    - filter: outlier
-      window_size: 4
-      radius: 4.0
-    - filter: lowpass
-      time_constant: 10
-      precision: 2
-- platform: filter
-  name: "Filtered realistic pressure"
-  entity_id: sensor.pressure
-  filters:
-    - filter: outlier
-      window_size: 4
-      radius: 4.0
-    - filter: lowpass
-      time_constant: 10
-      precision: 2
-#Statistics
-- platform: statistics
-  entity_id: sensor.temperature
-  name: Temperature stat
-  unit_of_measurement: "°C"
-- platform: statistics
-  entity_id: sensor.temperature_external
-  name: Temperature External stat
-  unit_of_measurement: "°C"
-- platform: statistics
-  entity_id: sensor.humidity
-  name: Humidity stat
-- platform: statistics
-  entity_id: sensor.pressure
-  name: Air Pressure mean
 #Plex
 #- platform: plex
 #  name: Plex Nas
@@ -302,7 +244,7 @@
 - platform: template
   sensors:
     day_of_week:
-      friendly_name: 'Giorno della settiman'
+      friendly_name: 'Giorno della settimana'
       value_template: '{% if now().weekday() in (0,) %} Lun {% elif now().weekday() in (1,) %} Mar  {% elif now().weekday() in (2,) %} Mer  {% elif now().weekday() in (3,) %} Gio {% elif now().weekday() in (4,) %} Ven {% elif now().weekday() in (5,) %} Sab {% elif now().weekday() in (6,) %} Dom{% endif %}'
 #H-Line
 - platform: template
@@ -310,4 +252,12 @@
     hline_1:
       value_template: hline
     hline_2:
+      value_template: hline
+    hline_3:
+      value_template: hline
+    hline_4:
+      value_template: hline
+    hline_5:
+      value_template: hline
+    hline_6:
       value_template: hline
