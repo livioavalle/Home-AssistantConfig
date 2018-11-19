@@ -16,6 +16,7 @@ default_view:
     - group.automations
     - group.trackers
     - group.alarm_clock
+    - scene.start
 bedroom_view:
   name: Bedroom
   view: yes
@@ -35,6 +36,8 @@ weather_view:
     - weather.dark_sky
     - history_graph.weather_sensor_graph
     - group.external
+    - camera.rain
+    - camera.tempo_infrared
 mediaplayer_view:
   name: Media Player
   view: yes
@@ -199,6 +202,8 @@ homeassistant:
   name: Home Assistant
   icon: mdi:home-assistant
   entities:
+    - input_select.hass_template
+    - sensor.hline_2
     - sensor.homeassistant_ssl_certificate
     - sensor.uptime
     - sensor.ha_startup_time

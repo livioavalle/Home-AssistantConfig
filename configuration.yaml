@@ -28,13 +28,17 @@ script: !include scripts.yaml
 sensor: !include sensors.yaml
 light: !include light.yaml
 switch: !include switch.yaml
+scene: !include scenes.yaml
 
 frontend:
+  javascript_version: latest
   themes: !include_dir_merge_named themes/
   extra_html_url:
     - /local/custom_ui/state-card-hline.html
+    - /local/custom_ui/custom-weather-card.html
   extra_html_url_es5:
     - /local/custom_ui/state-card-hline_es5.html
+    - /local/custom_ui/custom-weather-card.html
 
 customizer:
   custom_ui: hosted
@@ -136,6 +140,14 @@ panel_iframe:
     icon: mdi:chart-donut
     url: https://thingspeak.com/channels/591227/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15
 
+camera:
+  - platform: generic
+    still_image_url: https://api.sat24.com/animated/IT/infraPolair/3/W_dot_%20Europe%20Standard%20Time/9263758
+    name: Tempo Infrared
+  - platform: generic
+    still_image_url: https://api.sat24.com/animated/IT/rainTMC/3/W_dot_%20Europe%20Standard%20Time/6012921
+    name: Rain
+
 shell_command:
   turn_off_liviopc: "sshpass -p 'T0buRqFOaQNY' ssh livio@192.168.1.106 'shutdown -s'"
   hibernate_liviopc: "sshpass -p 'T0buRqFOaQNY' ssh livio@192.168.1.106 'shutdown -h'"
@@ -171,6 +183,8 @@ device_tracker:
 weather:
   - platform: openweathermap
     api_key: !secret openweathermap_api_key
+
+sun:
 
 thingspeak:
   api_key: F38KBHIU5P4QNKDZ
@@ -227,6 +241,11 @@ input_select:
     options:
       - Folkmetal
       - Official Sziget 2018 Line Up playlist
+      - De Andre
+      - Spotify.Me
+      - Song For The Road
+      - This Is Arctic Monkeys
+      - Acustichepowa
     icon: mdi:spotify
   spotify_source: #Spotify Playlist Player
     name: 'Source:'
@@ -293,10 +312,10 @@ history_graph:
     name: Weather sensor graph
     refresh: 5
     entities:
-      - sensor.filtered_realistic_temperature
-      - sensor.filtered_realistic_external_temperature
-      - sensor.filtered_realistic_humidity
-      - sensor.filtered_realistic_pressure
+      - sensor.temperature
+      - sensor.temperature_external
+      - sensor.humidity
+      - sensor.pressure
   gr2:
     name: Network graph
     refresh: 30

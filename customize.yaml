@@ -58,9 +58,10 @@ sensor.temperature_external:
 device_tracker.2c10c1d45c48: {}
 switch.wol_nas:
   icon: mdi:server
-sensor.speedtest_download: {}
+sensor.speedtest_upload:
+  icon: mdi:upload-network
 sensor.fastcom_download:
-  icon: mdi:speedometer
+  icon: mdi:download-network
 sensor.ssl_cert_expiry:
   friendly_name: SSL Certificate Expiry
   icon: mdi:certificate

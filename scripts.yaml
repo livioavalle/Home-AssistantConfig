@@ -19,6 +19,11 @@ spotify_music:
        media_content_id: >
         {% if is_state("input_select.spotify_playlist", "Folkmetal") %} spotify:user:giobambu:playlist:2dXDilkblnw3uWJLj1dCFM
         {% elif is_state("input_select.spotify_playlist", "Official Sziget 2018 Line Up playlist") %} spotify:user:szigetfestivalofficial:playlist:6Lbj66HshEjAHxgO7HCpMg
+        {% elif is_state("input_select.spotify_playlist", "De Andre") %} spotify:user:like4dubst3p:playlist:5JMpfWApM0KlQsFB2bApdr
+        {% elif is_state("input_select.spotify_playlist", "Spotify.Me") %} spotify:user:like4dubst3p:playlist:54eGqIn9Dhlc1j9g7I93DR
+        {% elif is_state("input_select.spotify_playlist", "Song For The Road") %} spotify:user:mumfordofficial:playlist:5k5LLKBaCbXFOJ0tqI2PAc
+        {% elif is_state("input_select.spotify_playlist", "This Is Arctic Monkeys") %} spotify:user:spotify:playlist:37i9dQZF1DX1A0PcRHdJVf
+        {% elif is_state("input_select.spotify_playlist", "Acustichepowa") %} spotify:user:1189229323:playlist:1zSBQQWAqs4q1BPXbkFDOR
         {% endif %}
 test_telegram:
   alias: test_telegram

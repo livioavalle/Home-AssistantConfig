@@ -1,0 +1,12 @@
+  - name: start
+    entities:
+      light.led_strip:
+        state: true
+        rgb_color: [191,0,255]
+        transition: 10
+        brightness: 255
+      light.lightstrip_desktop:
+        state: true
+        rgb_color: [191,0,255]
+        transition: 10
+        brightness: 255
